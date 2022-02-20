@@ -1,4 +1,4 @@
-import 'package:e_book/pages/my_home_page.dart';
+import 'package:e_book/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       title: 'eBook',
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 
-// for books.json you might need to change the audio value to local audio files like this. "audio":"voices.mp3"
+// for books.json you might need to change the audio value to local audio files like this "audio":"voices.mp3"
 
