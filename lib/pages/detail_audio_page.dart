@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:e_book/utils/constants.dart';
 import 'package:e_book/widgets/audio_file.dart';
+import 'package:e_book/widgets/book_image_item.dart';
+import 'package:e_book/widgets/custom_rounded_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class DetailAudioPage extends StatefulWidget {
@@ -22,6 +24,12 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
   void initState() {
     super.initState();
     _advancedAudioPlayer = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    _advancedAudioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,7 +81,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
             left: 0,
             right: 0,
             top: height / 5, // 1/5 == 0.2
-            height: height * 0.36,
+            height: height * 0.39,
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -104,6 +112,9 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
                     audioPlayer: _advancedAudioPlayer,
                     audioPath: widget.books[widget.index]['audio'],
                   ),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
                 ],
               ),
             ),
@@ -133,6 +144,61 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
               ),
             ),
           ),
+          Positioned(
+            top: height * 0.62,
+            left: 0,
+            right: 0,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: const Text(
+                'Add to Playlist',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: height * 0.68,
+            left: 0,
+            right: 0,
+            height: 150,
+            child: Container(
+              margin: const EdgeInsets.only(left: 12),
+              child: ListView.builder(
+                itemCount: widget.books.length,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      _advancedAudioPlayer.stop();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailAudioPage(
+                            books: widget.books,
+                            index: index,
+                          ),
+                        ),
+                      );
+                    },
+                    child: BookImageItem(books: widget.books, index: index),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Positioned(
+            left: 20,
+            right: 20,
+            bottom: 20,
+            height: 60,
+            child: CustomRoundedBottomBar(),
+          )
         ],
       ),
     );

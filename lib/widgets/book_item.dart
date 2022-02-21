@@ -1,4 +1,5 @@
 import 'package:e_book/pages/detail_audio_page.dart';
+import 'package:e_book/widgets/book_image_item.dart';
 import 'package:flutter/material.dart';
 import 'package:e_book/utils/constants.dart';
 
@@ -40,18 +41,7 @@ class BookItem extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Row(
             children: [
-              Container(
-                width: 90,
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage(books[index]['img']),
-                  ),
-                ),
-              ),
+              BookImageItem(books: books, index: index),
               const SizedBox(
                 width: 10,
               ),
