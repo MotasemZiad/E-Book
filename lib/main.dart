@@ -20,7 +20,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-// for books.json you might need to change the audio value to local audio files like this "audio":"voices.mp3"
-

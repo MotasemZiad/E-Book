@@ -6,9 +6,11 @@ class AudioFile extends StatefulWidget {
   const AudioFile({
     Key? key,
     required this.audioPlayer,
+    required this.audioCache,
     required this.audioPath,
   }) : super(key: key);
   final AudioPlayer audioPlayer;
+  final AudioCache audioCache;
   final String audioPath;
 
   @override
@@ -38,8 +40,6 @@ class _AudioFileState extends State<AudioFile> {
       });
     });
 
-    widget.audioPlayer.setUrl(widget.audioPath);
-
     widget.audioPlayer.onPlayerCompletion.listen((event) {
       setState(() {
         _position = const Duration(seconds: 0);
@@ -57,7 +57,7 @@ class _AudioFileState extends State<AudioFile> {
     return IconButton(
       onPressed: () {
         if (!isPlaying) {
-          widget.audioPlayer.play(widget.audioPath);
+          widget.audioCache.play(widget.audioPath);
           setState(() {
             isPlaying = true;
           });
@@ -112,10 +112,10 @@ class _AudioFileState extends State<AudioFile> {
   Widget btnRandom() {
     return IconButton(
       onPressed: () {},
-      icon: ImageIcon(
-        const AssetImage('assets/images/random.png'),
+      icon: const ImageIcon(
+        AssetImage('assets/images/random.png'),
         size: 15,
-        color: isLoop ? Colors.pink : Colors.black,
+        color: Colors.black,
       ),
     );
   }
@@ -135,9 +135,10 @@ class _AudioFileState extends State<AudioFile> {
           });
         }
       },
-      icon: const ImageIcon(
-        AssetImage('assets/images/loop.png'),
+      icon: ImageIcon(
+        const AssetImage('assets/images/loop.png'),
         size: 15,
+        color: isLoop ? Colors.pink : Colors.black,
       ),
     );
   }
@@ -157,7 +158,7 @@ class _AudioFileState extends State<AudioFile> {
   }
 
   Widget slider() {
-    return Slider(
+    return Slider.adaptive(
       activeColor: Colors.pink,
       inactiveColor: Colors.grey,
       min: 0.0,
@@ -165,7 +166,6 @@ class _AudioFileState extends State<AudioFile> {
       value: _position.inSeconds.toDouble(),
       onChanged: (value) => setState(() {
         changeToSecond(value.toInt());
-        value = value;
       }),
     );
   }

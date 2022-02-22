@@ -18,17 +18,18 @@ class DetailAudioPage extends StatefulWidget {
 }
 
 class _DetailAudioPageState extends State<DetailAudioPage> {
-  late AudioPlayer _advancedAudioPlayer;
-
+  late AudioPlayer _audioPlayer;
+  late AudioCache _audioCache;
   @override
   void initState() {
     super.initState();
-    _advancedAudioPlayer = AudioPlayer();
+    _audioPlayer = AudioPlayer();
+    _audioCache = AudioCache(fixedPlayer: _audioPlayer);
   }
 
   @override
   void dispose() {
-    _advancedAudioPlayer.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -56,7 +57,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
               elevation: 0,
               leading: IconButton(
                 onPressed: () {
-                  _advancedAudioPlayer.stop();
+                  _audioPlayer.stop();
                   Navigator.pop(context);
                 },
                 icon: const Icon(
@@ -109,7 +110,8 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
                     ),
                   ),
                   AudioFile(
-                    audioPlayer: _advancedAudioPlayer,
+                    audioPlayer: _audioPlayer,
+                    audioCache: _audioCache,
                     audioPath: widget.books[widget.index]['audio'],
                   ),
                   SizedBox(
@@ -175,7 +177,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GestureDetector(
                     onTap: () {
-                      _advancedAudioPlayer.stop();
+                      _audioPlayer.stop();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
