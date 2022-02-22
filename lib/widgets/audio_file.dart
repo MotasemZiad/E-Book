@@ -186,11 +186,13 @@ class _AudioFileState extends State<AudioFile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                _position.toString().split('.').first,
+                // _position.toString().split('.').first,
+                "${_position.inMinutes}:${_position.inSeconds.remainder(60)}",
                 style: const TextStyle(fontSize: 16),
               ),
               Text(
-                _duration.toString().split('.').first,
+                // _duration.toString().split('.').first,
+                "${_duration.inMinutes}:${_duration.inSeconds.remainder(60)}",
                 style: const TextStyle(fontSize: 16),
               ),
             ],
